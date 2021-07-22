@@ -11,7 +11,7 @@ class Portfolio(
     val id: Int,
 
     @CreatedDate
-    @Column(updatable=false, nullable = false)
+    @Column(updatable = false, nullable = false)
     val createdAt: Date,
 
     @ManyToOne(fetch = FetchType.LAZY)
