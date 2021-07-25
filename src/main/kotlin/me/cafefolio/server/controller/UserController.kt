@@ -1,12 +1,11 @@
 package me.cafefolio.server.controller
 
 import me.cafefolio.server.database.User
+import me.cafefolio.server.model.http.UserSignupDto
 import me.cafefolio.server.services.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/users")
@@ -18,5 +17,10 @@ class UserController(
         return userService.getByUsername(username).let {
             return ResponseEntity.ok(it)
         }
+    }
+
+    @PostMapping("/signup")
+    fun signup(@Validated @RequestBody userSignupDto: UserSignupDto): User {
+        return userService.create(userSignupDto)
     }
 }
