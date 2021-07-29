@@ -1,6 +1,6 @@
 package me.cafefolio.server.controller
 
-import me.cafefolio.server.database.User
+import me.cafefolio.server.dto.UserDto
 import me.cafefolio.server.model.http.UserSignupDto
 import me.cafefolio.server.services.UserService
 import org.springframework.http.HttpStatus
@@ -14,7 +14,7 @@ class UserController(
     val userService: UserService,
 ) {
     @GetMapping("/{username}")
-    fun getByUsername(@PathVariable("username") username: String): ResponseEntity<User> {
+    fun getByUsername(@PathVariable("username") username: String): ResponseEntity<UserDto> {
         try {
             return userService.getByUsername(username).let {
                 return ResponseEntity.ok(it)
@@ -25,7 +25,7 @@ class UserController(
     }
 
     @PostMapping("/signup")
-    fun signup(@Validated @RequestBody userSignupDto: UserSignupDto): User {
+    fun signup(@Validated @RequestBody userSignupDto: UserSignupDto): UserDto {
         return userService.create(userSignupDto)
     }
 }
