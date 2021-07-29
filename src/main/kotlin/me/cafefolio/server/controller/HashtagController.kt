@@ -2,6 +2,7 @@ package me.cafefolio.server.controller
 
 import me.cafefolio.server.database.Hashtag
 import me.cafefolio.server.services.HashtagService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,8 +16,13 @@ class HashtagController(
 ) {
     @GetMapping("/{tag}")
     fun get(@PathVariable("tag") tag: String): ResponseEntity<Hashtag> {
-        return hashtagService.getByTag(tag).let {
-            return ResponseEntity.ok(it)
+        try {
+            return hashtagService.getByTag(tag).let {
+                return ResponseEntity.ok(it)
+            }
+        } catch (error: Exception) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
         }
+
     }
 }

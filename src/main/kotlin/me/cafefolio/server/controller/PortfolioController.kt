@@ -2,6 +2,7 @@ package me.cafefolio.server.controller
 
 import me.cafefolio.server.database.Portfolio
 import me.cafefolio.server.services.PortfolioService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,8 +16,13 @@ class PortfolioController(
 ) {
     @GetMapping("/{name}")
     fun getByName(@PathVariable("name") name: String): ResponseEntity<Portfolio> {
-        return portfolioService.getByName(name).let {
-            return ResponseEntity.ok(it)
+        try {
+            return portfolioService.getByName(name).let {
+                return ResponseEntity.ok(it)
+            }
+        } catch (error: Exception) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
         }
+
     }
 }
