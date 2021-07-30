@@ -1,6 +1,6 @@
 package me.cafefolio.server.controller
 
-import me.cafefolio.server.database.Portfolio
+import me.cafefolio.server.dto.PortfolioDto
 import me.cafefolio.server.services.PortfolioService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,7 +15,7 @@ class PortfolioController(
     val portfolioService: PortfolioService,
 ) {
     @GetMapping("/{name}")
-    fun getByName(@PathVariable("name") name: String): ResponseEntity<Portfolio> {
+    fun getByName(@PathVariable("name") name: String): ResponseEntity<PortfolioDto> {
         try {
             return portfolioService.getByName(name).let {
                 return ResponseEntity.ok(it)

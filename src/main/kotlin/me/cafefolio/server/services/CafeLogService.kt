@@ -1,7 +1,8 @@
 package me.cafefolio.server.services
 
 import javassist.NotFoundException
-import me.cafefolio.server.database.CafeLog
+import me.cafefolio.server.dto.CafeLogDto
+import me.cafefolio.server.dto.converToDto
 import me.cafefolio.server.repository.CafeLogRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -10,12 +11,12 @@ import org.springframework.stereotype.Service
 class CafeLogService(
     val cafeLogRepository: CafeLogRepository,
 ) {
-    fun getOne(id: Int): CafeLog {
-        return cafeLogRepository.findByIdOrNull(id)
+    fun getOne(id: Int): CafeLogDto {
+        return cafeLogRepository.findByIdOrNull(id)?.let { it.converToDto() }
             ?: throw NotFoundException("CafeLog not found. id: $id")
     }
 
-    fun getList(): List<CafeLog> {
-        return cafeLogRepository.findAll()
+    fun getList(): List<CafeLogDto> {
+        return cafeLogRepository.findAll().map { it.converToDto() }
     }
 }

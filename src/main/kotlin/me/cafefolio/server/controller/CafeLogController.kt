@@ -1,6 +1,6 @@
 package me.cafefolio.server.controller
 
-import me.cafefolio.server.database.CafeLog
+import me.cafefolio.server.dto.CafeLogDto
 import me.cafefolio.server.services.CafeLogService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,7 +15,7 @@ class CafeLogController(
     val cafeLogService: CafeLogService,
 ) {
     @GetMapping("/{id}")
-    fun get(@PathVariable("id") id: Int): ResponseEntity<CafeLog> {
+    fun get(@PathVariable("id") id: Int): ResponseEntity<CafeLogDto> {
         try {
             return cafeLogService.getOne(id).let {
                 return ResponseEntity.ok(it)
@@ -26,7 +26,7 @@ class CafeLogController(
     }
 
     @GetMapping("")
-    fun getList(): List<CafeLog> {
+    fun getList(): List<CafeLogDto> {
         return cafeLogService.getList()
     }
 }

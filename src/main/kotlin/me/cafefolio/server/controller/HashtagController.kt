@@ -1,6 +1,6 @@
 package me.cafefolio.server.controller
 
-import me.cafefolio.server.database.Hashtag
+import me.cafefolio.server.dto.HashtagDto
 import me.cafefolio.server.services.HashtagService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,7 +15,7 @@ class HashtagController(
     val hashtagService: HashtagService,
 ) {
     @GetMapping("/{tag}")
-    fun get(@PathVariable("tag") tag: String): ResponseEntity<Hashtag> {
+    fun get(@PathVariable("tag") tag: String): ResponseEntity<HashtagDto> {
         try {
             return hashtagService.getByTag(tag).let {
                 return ResponseEntity.ok(it)
