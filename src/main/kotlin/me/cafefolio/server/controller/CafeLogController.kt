@@ -2,8 +2,6 @@ package me.cafefolio.server.controller
 
 import me.cafefolio.server.dto.CafeLogDto
 import me.cafefolio.server.services.CafeLogService
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,14 +13,8 @@ class CafeLogController(
     val cafeLogService: CafeLogService,
 ) {
     @GetMapping("/{id}")
-    fun get(@PathVariable("id") id: Int): ResponseEntity<CafeLogDto> {
-        try {
-            return cafeLogService.getOne(id).let {
-                return ResponseEntity.ok(it)
-            }
-        } catch (error: Exception) {
-            return ResponseEntity(HttpStatus.NOT_FOUND)
-        }
+    fun get(@PathVariable("id") id: Int): CafeLogDto {
+        return cafeLogService.getOne(id)
     }
 
     @GetMapping("")

@@ -3,8 +3,6 @@ package me.cafefolio.server.controller
 import me.cafefolio.server.dto.UserDto
 import me.cafefolio.server.model.http.UserSignupDto
 import me.cafefolio.server.services.UserService
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
@@ -14,14 +12,8 @@ class UserController(
     val userService: UserService,
 ) {
     @GetMapping("/{username}")
-    fun getByUsername(@PathVariable("username") username: String): ResponseEntity<UserDto> {
-        try {
-            return userService.getByUsername(username).let {
-                return ResponseEntity.ok(it)
-            }
-        } catch (error: Exception) {
-            return ResponseEntity(HttpStatus.NOT_FOUND)
-        }
+    fun getByUsername(@PathVariable("username") username: String): UserDto {
+        return userService.getByUsername(username)
     }
 
     @PostMapping("/signup")
